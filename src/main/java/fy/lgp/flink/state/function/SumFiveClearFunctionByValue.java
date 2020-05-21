@@ -1,13 +1,13 @@
 package fy.lgp.flink.state.function;
 
 import org.apache.flink.api.common.functions.RichMapFunction;
-import org.apache.flink.api.common.state.MapState;
-import org.apache.flink.api.common.state.MapStateDescriptor;
 import org.apache.flink.api.common.state.ValueState;
 import org.apache.flink.api.common.state.ValueStateDescriptor;
 import org.apache.flink.api.common.typeinfo.Types;
 import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.configuration.Configuration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * author : li guang ping
@@ -15,6 +15,7 @@ import org.apache.flink.configuration.Configuration;
  * date : 20-5-13 下午3:39
  **/
 public class SumFiveClearFunctionByValue extends RichMapFunction<String, Tuple2<String, Long>> {
+    Logger logger = LoggerFactory.getLogger(getClass());
     private static final Long ONE = 1L;
     private ValueState<Long> countAndSum;
 
@@ -39,9 +40,10 @@ public class SumFiveClearFunctionByValue extends RichMapFunction<String, Tuple2<
         }
         if (aLong == 5) {
             countAndSum.clear();
-        }else {
+        } else {
             countAndSum.update(aLong);
         }
+        logger.error(s + aLong);
         return Tuple2.of(s, aLong);
     }
 }

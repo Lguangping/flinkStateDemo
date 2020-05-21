@@ -1,6 +1,7 @@
 # Gradle
 .gradle
 out
+target
 build
 
 # IDEA IDE
